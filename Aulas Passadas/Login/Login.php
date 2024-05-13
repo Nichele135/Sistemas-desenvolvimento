@@ -25,7 +25,7 @@ function entrar($usuarios){
     $senha = $_POST['senha'];
 
     foreach ($usuarios as $usuario) {
-
+        
         if($usu == $usuario['usu']){
             if($senha == $usuario['senha']){
                 echo "Bem vindo!!!";
