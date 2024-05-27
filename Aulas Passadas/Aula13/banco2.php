@@ -54,13 +54,27 @@
     
         }
 
-        function updateOnDB($database, $set, $where){
+        function updateBanco($database, $set, $where, bool $debug = false) : void{
             global $banco;
             $q = "UPDATE $database SET $set WHERE $where";
             
             $resp = $banco->query($q);
-            echo "Query: $q";
-            echo var_dump($resp);
+            if($debug){
+                echo "Query: $q";
+                echo var_dump($resp);
+            }
+        }
+
+        function updateOnDB($database, $set, $where, bool $debug = false) : void{
+            echo "A";
+            global $banco;
+            $q = "UPDATE $database SET $set WHERE $where";
+            
+            $resp = $banco->query($q);
+            if($debug){
+                echo "Query: $q";
+                echo var_dump($resp);
+            }
         }
     
 

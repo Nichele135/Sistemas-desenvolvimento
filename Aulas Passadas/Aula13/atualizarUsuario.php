@@ -24,17 +24,20 @@
 
 $banco = new mysqli("localhost:3307", "root", "", "db_aulasegunda");
 
+
 $usu = $_POST['usuario'] ?? null;
-$nome = $_POST['novoNome'] ?? "";
-$sen = $_POST['novaSenha'] ?? "";
+$nom = $_POST['nome'] ?? "";
+$sen = $_POST['senha'] ?? "";
 
-if(is_null($usu) || $sen != ""){
-    require_once "banco2.php";
+if(is_null($usu) || $sen == ""){
+    require_once "form-criar-usuario.php";
 }else{
-    require_once "banco2.php";
+    require_once "form-criar-usuario.php"; // para testes
+    echo "<h3>Usuario $usu atualizado..</h3>";
+    // echo "~ [Usuario: $usu - Nome: $nom - Senha: $sen] ~ <br>";
+    atualizarUsuario($usu, $nom, $sen, false);
     
-    atualizarUsuario($usu, $nome, $sen, true);
+}
 
-    }
 
 ?>

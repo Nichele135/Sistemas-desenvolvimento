@@ -3,52 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aula 12 BANCO</title>
+    <title>Telefones</title>
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+
+        td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        }
+
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }
+        </style>
 </head>
 <body>
-
-<?php
-require_once "banco.php";
-
-require_once "form-login.php";
-
-$usu = $_POST['usuario'] ?? null;
-$sen = $_POST['senha'] ?? null;
-
-if(is_null($usu) || is_null($sen)){
-    require_once "form-login.php";
-}else{
-    echo "~ [usuario:$usu - Senha:$sen]";
     
-    $busca = buscarUsuario($usu);
+    <h1>SMARTPHONES</h1>
 
-    if($busca ->num_rows == 0){
-        echo "<br>Usuario nao existe";
-    }else{
-        echo "<br> boa";
+    <pre>
+    <?php 
 
-        $obj = $busca->fetch_object();
-        echo "<br>" . $obj->usuario;
-        echo "<br>" . $obj->nome;
-        echo "<br>" . $obj->senha;
+        require_once "banco2.php";
 
-        // if($sen === $obj->senha)
+        $q = "SELECT s.cod, s.nome AS smartphone, e.nome AS empresa FROM smartphone s JOIN empresa e ON s.empresa_cod = e.cod";
+    
+        // $q = "SELECT * FROM empresa";
 
-        if(password_verify($sen, $obj->senha)){
-            echo "<br> sucesso!";
-        }else{
-            echo "<br> sem sucesso!";
+        $busca = $banco->query($q);
+        echo print_r($busca);
+
+        // $obj_smartphone = $busca->fetch_object();
+        // echo print_r($obj_smartphone);
+    
+    ?>
+    </pre>
+
+
+    <table>
+    <tr>
+        <th>COD</th>
+        <th>NOME</th>
+        <th>EMPRESA</th>
+        <th></th>
+    </tr>
+    
+    <?php 
+        while ($obj_smartphone = $busca->fetch_object()) { 
+            echo "<tr>";
+            echo "<td>$obj_smartphone->cod</td>";
+            echo "<td>$obj_smartphone->smartphone</td>";
+            echo "<td>$obj_smartphone->empresa</td>";
+            echo "<td> <a href=\"formEditar.php?p=". $obj_smartphone->cod . "\">editar</a></td>";
+            echo "</tr>";
         }
-    }
-    
-    echo "<br>" . password_hash("123", PASSWORD_DEFAULT);
+    ?>
 
-    
-}
+    </table>
 
 
-
-?>
-    
 </body>
 </html>
